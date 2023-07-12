@@ -1,0 +1,54 @@
+#image-input{
+  display: none;
+}
+
+.preview-container {
+  position: relative;
+  display: inline-block; 
+}
+
+.preview{
+  height: 90vmin;
+  width: auto;
+  align-self: center;
+
+}
+.delete-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+}
+
+.paperclip{
+  -webkit-filter: invert(1);
+  filter: invert(1);
+  width: 32px;
+  height: 32px;
+}
+
+.text-area {
+  background-color: transparent;
+  color: white;
+  border: none;
+  resize: none; 
+  outline: none; 
+  caret-color: white; 
+  width: auto;
+  height: 45vmin;
+}
+
+.text-area::placeholder {
+  color: grey; 
+}
+
+.text-area:focus {
+  background-color: transparent;
+  color: white;
+  outline: none; 
+}
+

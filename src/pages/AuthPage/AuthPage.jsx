@@ -3,16 +3,12 @@ import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 export default function AuthPage({ setUser }) {
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   return (
     <main>
       <h1>AuthPage</h1>
-      <button onClick={() => setShowSignUp(!showSignUp)}>{showSignUp ? 'Log In' : 'Sign Up'}</button>
-      { showSignUp ?
-          <SignUpForm setUser={setUser} />
-          :
-          <LoginForm setUser={setUser} />
-      }
+      <button onClick={() => setShowLogin(!showLogin)}>{showLogin ? 'Log In' : 'Sign Up'}</button>
+      {showLogin ? <LoginForm setUser={setUser} setShowLogin={setShowLogin} showLogin={showLogin}/> : <SignUpForm setUser={setUser} setShowLogin={setShowLogin} showLogin={showLogin} />}
     </main>
   );
 }
