@@ -4,6 +4,7 @@ import UploadFile from '../UploadFile/UploadFile';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import './SignUpForm.css'
 
 export default class SignUpForm extends Component {
   state = {
@@ -41,22 +42,24 @@ export default class SignUpForm extends Component {
   render() {
     const disable = this.state.password !== this.state.confirm;
     return (
-      <Card style={{width: '90vmin'}}>
-        <Card.Body>
+      <Card className='signup-form d-flex flex-column align-items-center' style={{width: '90vmin'}}>
+        <Card.Body className='' >
           <Card.Title>SIGN UP</Card.Title>
         <div className="form-container d-flex flex-column justify-content-center">
-          <Form autoComplete="off" onSubmit={this.handleSubmit}>
-            <Form.Label>Name</Form.Label>
-            <Form.Control type="text" name="name" value={this.state.name} onChange={this.handleChange} required />
-            <Form.Label>Email</Form.Label>
+          <Form className='signup-form' autoComplete="off" onSubmit={this.handleSubmit}>
+            <Form.Label className='mt-2'>Display Name</Form.Label>
+            <Form.Control type="text" name="displayName" value={this.state.name} onChange={this.handleChange} required />
+            <Form.Label className='mt-2'>Username</Form.Label>
+            <Form.Control type="text" name="username" value={this.state.name} onChange={this.handleChange} required />
+            <Form.Label className='mt-2'>Email</Form.Label>
             <Form.Control type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
-            <Form.Label>Password</Form.Label>
+            <Form.Label className='mt-2'>Password</Form.Label>
             <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange} required />
-            <Form.Label>Confirm</Form.Label>
-            <Form.Control type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
-            <div className='d-flex justify-content-between'>
-              <Button className='mt-2' type="submit" disabled={disable}>SIGN UP</Button>
-              <Button className='mt-2' onClick={() => this.props.setShowLogin(!this.props.showLogin)}>LOG IN</Button>
+            <Form.Label className='mt-2'>Confirm</Form.Label>
+            <Form.Control  type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
+            <div className='d-flex justify-content-between mt-3'>
+              <Button className='mt-2 login' onClick={() => this.props.setShowLogin(!this.props.showLogin)}>LOG IN</Button>
+              <Button className='mt-2 signup' type="submit" disabled={disable}>SIGN UP</Button>
             </div>
           </Form>
         </div>

@@ -30,7 +30,7 @@ function UploadFile({ user }) {
     formData.append('userEmail', user.email);
     try {
       await axios.post('/post/create', formData);
-      history('/');
+      history('/home');
     } catch (err) {
       console.error(err);
     }
@@ -43,8 +43,8 @@ function UploadFile({ user }) {
 
   return (
     <>
-    <div className='form-container d-flex flex-column'>
-      <Form.Control maxLength={280} className='text-area mt-1 ms-3' placeholder="Start typing your beat here" as='textarea' onChange={onTextChange} />
+    <div className=' d-flex flex-column'>
+      <Form.Control maxLength={"280"} className='text-area mt-1 ms-5' placeholder="Start typing your beat here" as='textarea' onChange={onTextChange} />
       {preview && <div className='preview-container'>
         <img className='preview' src={preview} alt="preview" />
         <button className="delete-icon" onClick={removeImage}>X</button>
@@ -52,7 +52,7 @@ function UploadFile({ user }) {
       <div className='d-flex justify-content-between'>
 
         <Form.Label htmlFor='image-input'>
-          <img className='paperclip ms-3' src={Paperclip} alt="paperclip" />
+          <img className='paperclip ms-5' src={Paperclip} alt="paperclip" />
         </Form.Label>
         <Form.Control id='image-input' type="file" onChange={onFileChange} />
         <Button className='me-3' onClick={onUpload}>Post</Button>

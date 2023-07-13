@@ -1,9 +1,10 @@
 const cloudinary = require('../../config/cloudinary');
 const User = require('../../models/user'); // assuming you have a User model
-const Post = require('../../models/posts')
+const Post = require('../../models/post')
 
 module.exports = {
-  create
+  create,
+  index
 }
 
 async function create (req, res) {
@@ -27,3 +28,14 @@ async function create (req, res) {
     res.status(500).send('Server Error');
   }
 };
+
+
+async function index (req, res){
+  try {
+    const beats = await Post.find().sort({timestamp: -1})
+    res.json(beats)
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}

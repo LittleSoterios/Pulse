@@ -38,8 +38,8 @@
   resize: none; 
   outline: none; 
   caret-color: white; 
-  width: auto;
-  height: 45vmin;
+  width: 80vmin;
+  height: 50vmin;
 }
 
 .text-area::placeholder {

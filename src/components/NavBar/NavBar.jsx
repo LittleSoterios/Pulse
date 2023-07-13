@@ -19,7 +19,7 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <footer>
-      <nav className=''>
+      <nav className='nav'>
         <Link to="/home"><img className='icon' src={ Home } alt='home'/></Link>
         
         <Link to="/search"><img className='icon' src={ Search } alt='search'/></Link>

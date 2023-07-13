@@ -7,7 +7,7 @@ export default function NameAvatarBox({ user }){
     <>
     <div className="d-flex mt-4 align-items-center">
       <img className="avatar" src={user.avatar} alt="avatar" />
-      <h3 className='ms-2'>{user.name}</h3>
+      <h3 className='ms-3'>@{user.username}</h3>
     </div>
     
     </>

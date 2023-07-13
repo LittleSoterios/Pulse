@@ -5,7 +5,13 @@ const bcrypt = require('bcrypt');
 const SALT_ROUNDS = 6;
 
 const userSchema = new Schema({
-  name: {type: String, required: true},
+  displayName: {type: String, required: true},
+  username: {
+    type: String, 
+    required: true, 
+    unique: true, 
+    trim: true
+  },
   email: {
     type: String,
     unique: true,
@@ -20,7 +26,9 @@ const userSchema = new Schema({
   avatar : {
     type: String,
     default: 'https://res.cloudinary.com/dhwzby5cr/image/upload/v1689154217/default-avatar.jpg'
-  }
+  },
+  bio: {type: String}
+
 }, {
   timestamps: true,
   toJSON: {
