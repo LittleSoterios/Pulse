@@ -6,6 +6,7 @@ require('./config/database');
 
 const User = require('./models/user')
 const Post = require('./models/post')
+const History = require('./models/history')
 
 function createRandomUser(){
   return {
@@ -18,13 +19,25 @@ function createRandomUser(){
   };
 }
 
-function createRandomPost(){
-  const x = (Math.random()< 0.3)
-  return{
-    user: getRandomUser().id,
-    media: x ? faker.image.url(): null,
-    text: x ? faker.lorem.sentences({min: 2, max: 3}) : faker.lorem.sentence() 
+async function createRandomPost() {
+  const x = (Math.random() < 0.3);
+  const randomUser = await getRandomUser();
+
+  const numLikes = Math.floor(Math.random() * 31);
+  const arr_likes = [];
+
+  for(let i = 0; i < numLikes; i++){
+    arr_likes.push(getRandomUser());
   }
+
+  const resolvedLikes = await Promise.all(arr_likes);
+
+  return {
+    user: randomUser._id,
+    media: x ? faker.image.url() : null,
+    text: x ? faker.lorem.sentences({min: 2, max: 3}) : faker.lorem.sentence(),
+    likes: resolvedLikes.map(user => user._id),
+  };
 }
 
 
@@ -42,7 +55,8 @@ async function seed(){
 
   for(let i=0; i<20; i++){
     const user = createRandomUser()
-    await User.create(user)
+    const createdUser = await User.create(user)
+    await History.create({user: createdUser._id})
     arr.push(user)
   }
 
@@ -52,12 +66,16 @@ async function seed(){
   })
 
   for(let i=0; i<100; i++){
-    const post = createRandomPost()
+    const post = await createRandomPost()
     await Post.create(post)
   }
+
+  console.log('done')
 }
 
 seed()
+
+
 
 
 

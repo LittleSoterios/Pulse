@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/users-service';
+import ProfileBeats from '../../components/ProfileBeats/ProfileBeats';
 
 export default function ProfilePage({ user, setUser }) {
   const [show, setShow] = useState(false);
@@ -26,6 +27,9 @@ export default function ProfilePage({ user, setUser }) {
       </Button>
       </div>
       <img className='profile-avatar ms-4 mb-4' src={user.avatar} alt="avatar" />
+    </div>
+    <div>
+      <ProfileBeats user={user}></ProfileBeats>
     </div>
       
 

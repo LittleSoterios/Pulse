@@ -13,7 +13,7 @@ const postSchema = new Schema({
     required: true,
     maxlength: 280
   },
-  likes: Number
+  likes: [{type: Schema.Types.ObjectId, ref: 'User'}]
 
 },{
   timestamps: true

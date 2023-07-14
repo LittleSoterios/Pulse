@@ -39,6 +39,9 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.index({ displayName: 'text', username: 'text' }); // this allows me to do searching by using $text
+
+
 userSchema.pre('save', async function(next) {
   // 'this' is the user document
   if (!this.isModified('password')) return next();

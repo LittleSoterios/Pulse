@@ -22,8 +22,8 @@ export default function App(props) {
             <NavBar user={user} setUser={setUser} />
             <Routes>
               {/* Route components in here */}
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/search" element={<SearchPage />} />
+              <Route path="/home" element={<HomePage user={user}/>} />
+              <Route path="/search" element={<SearchPage user={user}/>} />
               <Route path="/create" element={<CreatePage user={user} />} />
               <Route path="/likes" element={<LikesPage/>} />
               <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />

@@ -1,0 +1,17 @@
+.follow-btn{
+  color: rgba(255, 255, 255, 0.582);
+  border: 2px rgba(255, 255, 255, 0.2) solid;
+  border-radius: 9px;
+  align-self: center;
+  margin-top: 2rem;
+  margin-right: 0.7rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  align-items:baseline;
+  justify-content: center;
+}
+h5{
+  margin-top: 0.5rem;
+  font-size: smaller;
+}

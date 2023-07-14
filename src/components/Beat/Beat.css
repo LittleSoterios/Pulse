@@ -1,3 +1,26 @@
-.beat > img{
-  width: 90vmin;
+.beat-img{
+  width: 75vmin;
+  border-radius: 9px;
+  left: 0;
+  align-self: center;
+  margin-right: 1.5rem;
+}
+.left-border{
+  border-left: white solid 1px;
+  margin-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+.like-icon{
+  -webkit-filter: invert(0.9);
+  filter: invert(0.9);
+  
+  
+  height: 28px;
+  margin-left: 1.5rem;
+  z-index: 0;
+}
+
+.like-number{
+  margin-top: 0.09rem;
 }

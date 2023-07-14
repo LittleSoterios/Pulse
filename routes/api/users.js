@@ -13,4 +13,10 @@ router.post('/login', usersCtrl.login);
 
 router.get('/check-token', ensureLoggedIn, usersCtrl.checkToken)
 
+router.get('/search', ensureLoggedIn, usersCtrl.search)
+
+router.post('/follow/:id', ensureLoggedIn, usersCtrl.follow)
+
+router.post('/unfollow/:id', ensureLoggedIn, usersCtrl.unfollow)
+
 module.exports = router;

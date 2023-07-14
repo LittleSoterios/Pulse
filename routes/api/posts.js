@@ -9,5 +9,8 @@ const upload = multer({ dest: 'uploads/' }); // save files in 'uploads' director
 router.post('/create', ensureLoggedIn, upload.single('image'), PostCtrl.create);
 
 router.get('/index', ensureLoggedIn, PostCtrl.index)
+router.get('/index_own', ensureLoggedIn, PostCtrl.index_own)
+router.post('/like/:id', ensureLoggedIn, PostCtrl.like)
+router.post('/dislike/:id', ensureLoggedIn, PostCtrl.dislike)
 
 module.exports = router;

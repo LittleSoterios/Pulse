@@ -1,17 +1,22 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/user');
+const History = require('../../models/history')
 
 module.exports = {
   create,
   login,
-  checkToken
+  checkToken,
+  search,
+  follow,
+  unfollow
 };
 
 async function create(req, res) {
   try {
     // Add the user to the db
     const user = await User.create(req.body);
+    await History.create({user: user._id})
     const token = createJWT(user);
     res.json(token);
   } catch (err) {
@@ -49,4 +54,74 @@ function createJWT(user) {
     process.env.SECRET,
     { expiresIn: '24h' }
   );
+}
+
+
+async function search(req, res,next){
+  const SearchString = req.query.search
+  User.ensureIndexes()
+  
+  try {
+    const history = await History.findOne({user: req.query.userId})
+    const profiles = await User.find({
+      $or: [
+        {displayName: { $regex: SearchString, $options: 'i'}},
+        { username: { $regex: SearchString, $options: 'i' } }
+      ]})
+
+    const profile_obj = []
+    profiles.forEach(function (profile){
+      if(history.following.includes(profile._id)){
+        profile_obj.push({profile: profile, following: true})
+      } else{
+        profile_obj.push({profile: profile, following: false})
+      }
+    })
+    
+    res.json(profile_obj)
+
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+
+}
+
+
+async function follow(req, res){
+
+  try {
+    const history = await History.findOne({user: req.query.userId})
+    history.following.push(req.params.id)
+    history.save()
+
+    const history_2 = await History.findOne({user: req.params.id})
+    history_2.followers.push(req.params.id)
+    history_2.save()
+
+    res.json(history)
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+async function unfollow(req, res){
+
+  try {
+    const history = await History.findOne({user: req.query.userId})
+    var idx = history.following.indexOf(req.params.id)
+    history.following.splice(idx, 1)
+    history.save()
+
+    const history_2 = await History.findOne({user: req.params.id})
+    idx = history_2.following.indexOf(req.query.userId)
+    history_2.following.splice(idx, 1)
+    history_2.save()
+
+    res.json(history)
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
 }
