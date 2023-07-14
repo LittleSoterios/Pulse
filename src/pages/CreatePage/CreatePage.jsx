@@ -9,7 +9,7 @@ export default function CreatePage({ user }) {
   return (
     <>
     <h2>Create</h2>
-    <NameAvatarBox user={user}/>
+    <NameAvatarBox profile={user}/>
     <UploadFile user={user}/>
     </>
     

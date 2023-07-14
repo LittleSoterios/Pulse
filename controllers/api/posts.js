@@ -3,7 +3,7 @@
 const cloudinary = require('../../config/cloudinary');
 const User = require('../../models/user'); // assuming you have a User model
 const Post = require('../../models/post');
-const post = require('../../models/post');
+const History = require('../../models/history');
 
 
 module.exports = {
@@ -77,10 +77,16 @@ async function index_own (req, res){
 async function like(req, res){
   console.log(req.params.id, req.query.userId)
   try {
+    const history = await History.findOne({user: req.query.userId})
     const post = await Post.findById(req.params.id)
     const user = await User.findById(req.query.userId)
-    post.likes.push(user._id)
+    
+    history.liked.push(post._id) // add posted to users history
+    history.save()
+    
+    post.likes.push(user._id) // add the user to the post's liked
     post.save()
+    
     res.json({likes: post.likes})
     
   } catch (err) {
@@ -91,11 +97,18 @@ async function like(req, res){
 async function dislike(req, res){
   console.log(req.params.id, req.query.userId)
   try {
+    const history = await History.findOne({user: req.query.userId})
     const post = await Post.findById(req.params.id)
     const user = await User.findById(req.query.userId)
+
+    const liked_idx = history.liked.indexOf(post._id)
+    history.liked.splice(liked_idx, 1) // remove the post from the users history
+    history.save()
+
     const idx = post.likes.indexOf(user._id)
-    post.likes.splice(idx, 1)
+    post.likes.splice(idx, 1) // remove the user from the post's liked
     post.save()
+    
     res.json({likes: post.likes})
     
   } catch (err) {

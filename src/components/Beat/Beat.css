@@ -24,3 +24,7 @@
 .like-number{
   margin-top: 0.09rem;
 }
+.beat{
+  padding-bottom: 1rem;
+  border-bottom: 1px rgba(100,100,100,0.5) solid;
+}

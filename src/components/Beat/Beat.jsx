@@ -37,7 +37,7 @@ export default function Beat({ beat, user }) {
 
 
   return (
-    <div className="beat d-flex flex-column mb-3 ">
+    <div className="beat d-flex flex-column mb-1 ">
       <NameAvatarBox profile={beat.user} key={beat.user._id}></NameAvatarBox>
       <div className='d-flex flex-column left-border'>
         <p className='ms-4 mt-0 me-4'>{beat.post.text}</p>

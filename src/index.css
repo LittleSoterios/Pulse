@@ -39,12 +39,7 @@ code {
   height: 100%;
 }
 
-.icon {
-  -webkit-filter: invert(1);
-  filter: invert(1);
-  height: 48px;
-  width: 48px;
-}
+
 
 h2{
   margin: 2vmin 0 0 2vmin;
@@ -148,4 +143,12 @@ h2{
   padding: 9px;
   color: white;
   margin-top: 1rem;
+}
+
+
+.pulse-home{
+  width: 48px;
+  height:auto;
+  filter: invert(1);
+  
 }
