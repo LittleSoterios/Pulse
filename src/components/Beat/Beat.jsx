@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
+
 import NameAvatarBox from '../NameAvatarBox/NameAvatarBox';
 import './Beat.css'
 import Sun from '../../public/sun/icons8-sun-48.svg'
+import sendRequest from '../../utilities/send-request';
 
-export default function Beat({ beat, user }) {
+const Beat = React.forwardRef(({ beat, user }, ref) => {
   const [likes, setLikes] = useState(beat.post.likes.length)
   const user_liked = beat.post.likes.includes(user._id)
   const [liked, setLiked] = useState(user_liked)
 
   const handleLike = async () =>{
     try {
-      const response = await fetch(`/post/like/${beat.post._id}?userId=${user._id}`,{
-        method: 'POST',
-      })
+      const response = await sendRequest(`/post/like/${beat.post._id}`,'POST') // ! need to refactor everything to use sendrequest
       
-      const data = await response.json()
+      const data = await response
       setLikes(data.likes.length)
       setLiked(true)
     } catch (err) {
@@ -23,11 +23,9 @@ export default function Beat({ beat, user }) {
   }
   const handleDislike = async () =>{
     try {
-      const response = await fetch(`/post/dislike/${beat.post._id}?userId=${user._id}`,{
-        method: 'POST',
-      })
+      const response = await sendRequest(`/post/dislike/${beat.post._id}`, 'POST')
       
-      const data = await response.json()
+      const data = await response
       setLikes(data.likes.length)
       setLiked(false)
     } catch (err) {
@@ -37,7 +35,7 @@ export default function Beat({ beat, user }) {
 
 
   return (
-    <div className="beat d-flex flex-column mb-1 ">
+    <div ref={ref} className="beat d-flex flex-column mb-1 ">
       <NameAvatarBox profile={beat.user} key={beat.user._id}></NameAvatarBox>
       <div className='d-flex flex-column left-border'>
         <p className='ms-4 mt-0 me-4'>{beat.post.text}</p>
@@ -48,4 +46,5 @@ export default function Beat({ beat, user }) {
       </div>
     </div>
   );
-}
+});
+export default Beat

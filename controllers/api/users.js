@@ -40,7 +40,6 @@ async function login(req, res) {
 
 function checkToken(req, res) {
   // req.user wll always be there for you when a token is sent 
-  console.log('req.user', req.user)
   res.json(req.exp)
 }
 
@@ -62,7 +61,7 @@ async function search(req, res,next){
   User.ensureIndexes()
   
   try {
-    const history = await History.findOne({user: req.query.userId})
+    const history = await History.findOne({user: req.user._id})
     const profiles = await User.find({
       $or: [
         {displayName: { $regex: SearchString, $options: 'i'}},
@@ -92,12 +91,12 @@ async function search(req, res,next){
 async function follow(req, res){
 
   try {
-    const history = await History.findOne({user: req.query.userId})
+    const history = await History.findOne({user: req.user._id})
     history.following.push(req.params.id)
     history.save()
 
     const history_2 = await History.findOne({user: req.params.id})
-    history_2.followers.push(req.params.id)
+    history_2.followers.push(req.user._id)
     history_2.save()
 
     res.json(history)
@@ -109,13 +108,13 @@ async function follow(req, res){
 async function unfollow(req, res){
 
   try {
-    const history = await History.findOne({user: req.query.userId})
+    const history = await History.findOne({user: req.user._id})
     var idx = history.following.indexOf(req.params.id)
     history.following.splice(idx, 1)
     history.save()
 
     const history_2 = await History.findOne({user: req.params.id})
-    idx = history_2.following.indexOf(req.query.userId)
+    idx = history_2.following.indexOf(req.user._id)
     history_2.following.splice(idx, 1)
     history_2.save()
 

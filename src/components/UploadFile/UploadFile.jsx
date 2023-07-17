@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import './UploadFile.css'
 import Paperclip from '../../public/paperclip/icons8-paperclip-windows-11-filled-32.png'
 import axios from 'axios'
-
+import { getToken } from '../../utilities/users-service';
 
 function UploadFile({ user }) {
 
@@ -27,9 +27,13 @@ function UploadFile({ user }) {
     const formData = new FormData();
     formData.append('image', image);
     formData.append('content', content);
-    formData.append('userEmail', user.email);
+    const token = getToken()
+    const headers = { headers:{
+      'authorization' : `Bearer ${token}`
+    }
+    }
     try {
-      await axios.post('/post/create', formData);
+      await axios.post('/post/create', formData, headers);
       history('/home');
     } catch (err) {
       console.error(err);

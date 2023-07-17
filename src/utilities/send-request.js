@@ -2,7 +2,6 @@
 import { getToken } from "./users-service"
 
 export default async function sendRequest(url, method = 'GET', payload = null){
-
   // Fetch uses an options object as a second arg
   // to make requests other than GET, include data,
   // set headers.
@@ -16,6 +15,7 @@ export default async function sendRequest(url, method = 'GET', payload = null){
   if(token){
     //endure the headers objects exists
     options.headers ||= {};
+
     //add token to an authorisation header
     //prefacing with 'bearer' is recommended in the http specification
     options.headers.Authorization = `Bearer ${token}`

@@ -2,6 +2,7 @@ import { Style } from "@mui/icons-material"
 import NameAvatarBox from "../NameAvatarBox/NameAvatarBox"
 import './FollowCard.css'
 import { useState } from "react"
+import sendRequest from "../../utilities/send-request"
 
 export default function FollowCard({ profile, user}){
   const [following, setFollowing] = useState(profile.following)
@@ -10,11 +11,9 @@ export default function FollowCard({ profile, user}){
 
   const handleFollow = async () =>{
     try {
-      const response = await fetch(`/api/users/follow/${profile.profile._id}?userId=${user._id}`, {
-        method: 'POST'
-      })
+      const response = await sendRequest(`/api/users/follow/${profile.profile._id}`, 'POST')
 
-      await response.json()
+      await response
 
       setFollowing(true)
     } catch (err) {
@@ -24,11 +23,9 @@ export default function FollowCard({ profile, user}){
   
   const handleUnfollow = async () =>{
     try {
-      const response = await fetch(`/api/users/unfollow/${profile.profile._id}?userId=${user._id}`, {
-        method: 'POST'
-      })
+      const response = await sendRequest(`/api/users/unfollow/${profile.profile._id}`, 'POST')
 
-      await response.json()
+      await response
       
       setFollowing(false)
     } catch (err) {

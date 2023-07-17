@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Beat from '../Beat/Beat';
 import './ProfileBeats.css'
+import sendRequest from '../../utilities/send-request';
 
 export default function ProfileBeats({ user }) {
     const [beats, setBeats] = useState([]);
@@ -11,9 +12,9 @@ export default function ProfileBeats({ user }) {
 
     const fetchBeats = async () => {
         // Fetch the beats from your API
-        const response = await fetch(`/post/index_own?userId=${user._id}`);
-        const data = await response.json();
-        // console.log(data)
+        const response = await sendRequest(`/post/index_own`)
+        const data = await response
+        console.log(data)       
         setBeats(data);
         // console.log('stuff')
     };

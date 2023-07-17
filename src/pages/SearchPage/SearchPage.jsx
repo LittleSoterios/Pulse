@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Form } from "react-bootstrap";
 import FollowCard from "../../components/FollowCard/FollowCard";
+import sendRequest from "../../utilities/send-request";
 
 export default function SearchPage({ user }) {
   
@@ -9,8 +9,8 @@ export default function SearchPage({ user }) {
 
 
   const handleSearch = async (e) =>{
-    const response = await fetch(`/api/users/search?search=${e.target.value}&userId=${user._id}`)
-    const data = await response.json();
+    const response = await sendRequest(`/api/users/search?search=${e.target.value}`)
+    const data = await response;
     setProfiles(data)
 
   }
@@ -23,7 +23,6 @@ export default function SearchPage({ user }) {
       <input className="search-box" type="text" placeholder="search" onChange={handleSearch} />
     </div>
     <div className="follow-list">
-      {console.log(profiles)}
       {profiles.map(profile => <FollowCard key={profile.profile._id} profile={profile} user={user}/>)}
     </div>
     </>
