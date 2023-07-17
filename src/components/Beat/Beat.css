@@ -6,7 +6,7 @@
   margin-right: 1.5rem;
 }
 .left-border{
-  border-left: white solid 1px;
+  border-left: rgba(158, 158, 158, 0.404) solid 1px;
   margin-left: 1.5rem;
   margin-top: 1rem;
 }

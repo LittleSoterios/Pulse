@@ -9,7 +9,7 @@
   --text-light: #968c84;
   --text-dark: #615954;
   --bg-main: rgb(3, 0, 24);
-  --text-main: white;
+  --text-main: rgba(255, 255, 255, 0.9);
   
 }
 
@@ -152,4 +152,12 @@ h2{
   height:auto;
   filter: invert(1);
   
+}
+
+.nav-tabs .nav-link {
+  
+  color: white;
+  text-decoration: none;
+  
+
 }

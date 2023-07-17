@@ -12,5 +12,6 @@ router.get('/index', ensureLoggedIn, PostCtrl.index)
 router.get('/index_own', ensureLoggedIn, PostCtrl.index_own)
 router.post('/like/:id', ensureLoggedIn, PostCtrl.like)
 router.post('/dislike/:id', ensureLoggedIn, PostCtrl.dislike)
+router.get('/index_likes', ensureLoggedIn, PostCtrl.index_likes)
 
 module.exports = router;

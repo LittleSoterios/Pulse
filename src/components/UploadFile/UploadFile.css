@@ -5,13 +5,23 @@
 .preview-container {
   position: relative;
   display: inline-block; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: grey solid 1px;
+  border-radius: 9px;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+
 }
 
 .preview{
-  height: 90vmin;
+  height: 60vh;
+  height: 60dvw;
   width: auto;
   align-self: center;
-
+  
 }
 .delete-icon {
   position: absolute;

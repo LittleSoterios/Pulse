@@ -19,4 +19,8 @@ router.post('/follow/:id', ensureLoggedIn, usersCtrl.follow)
 
 router.post('/unfollow/:id', ensureLoggedIn, usersCtrl.unfollow)
 
+router.get('/get_history', ensureLoggedIn, usersCtrl.getHistory)
+
+
+
 module.exports = router;

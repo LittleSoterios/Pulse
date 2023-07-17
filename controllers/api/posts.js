@@ -12,7 +12,8 @@ module.exports = {
   index,
   index_own,
   like,
-  dislike
+  dislike,
+  index_likes
 }
 
 async function create(req, res) {
@@ -90,6 +91,35 @@ async function index_own(req, res) {
     res.status(500).send('Server Error');
   }
 }
+
+
+async function index_likes(req, res){
+  try {
+    console.log(req.user)
+    const history = await History.findOne({user: req.user._id})
+    console.log(history.liked)
+    const beatsUnsorted = await Post.find({
+      _id: { $in: history.liked}
+    })
+
+    // Manually sorts the posts in the order they appear in history.liked
+    let beats = history.liked.map(id => {
+      return beatsUnsorted.find(beat => beat._id.toString() === id.toString());
+    });
+
+    beats = beats.reverse()
+    
+    const pack = await Promise.all(beats.map(async (beat) => {
+      const user = await User.findById(beat.user);
+      return {post: beat, user: user};
+    }));
+    res.json(pack)
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
 
 async function like(req, res) {
 

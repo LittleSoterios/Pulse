@@ -9,7 +9,8 @@ module.exports = {
   checkToken,
   search,
   follow,
-  unfollow
+  unfollow,
+  getHistory
 };
 
 async function create(req, res) {
@@ -122,5 +123,17 @@ async function unfollow(req, res){
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
+  }
+}
+
+async function getHistory(req, res){
+
+  try {
+    const history = await History.findOne({user: req.user._id})
+    res.json(history)
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');    
   }
 }

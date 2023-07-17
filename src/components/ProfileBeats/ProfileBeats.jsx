@@ -12,6 +12,7 @@ export default function ProfileBeats({ user }) {
 
     const fetchBeats = async () => {
         // Fetch the beats from your API
+        
         const response = await sendRequest(`/post/index_own`)
         const data = await response
         console.log(data)       
