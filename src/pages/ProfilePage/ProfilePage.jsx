@@ -9,12 +9,21 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import LikesList from '../../components/LikesList/LikesList';
 
-export default function ProfilePage({ user, setUser }) {
-  const [show, setShow] = useState(false);
-  const [history, setHistory]  = useState({followers: [], following: []});
+export default function ProfilePage({ user, setUserToken, setUser }) {
 
+
+  const [show, setShow] = useState(false);
+  const [showAvatarCanvas, setShowAvatarCanvas] = useState(false); // state to control avatar offcanvas
+  const [history, setHistory]  = useState({followers: [], following: []});
+  const [setting, setSetting] = useState({displayName: user.displayName, username: user.username, bio: '', avatar: ''})
+  
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  // Handlers for avatar offcanvas
+  const handleAvatarCanvasClose = () => setShowAvatarCanvas(false);
+  const handleAvatarCanvasShow = () => setShowAvatarCanvas(true);
 
   useEffect(() =>{
     getHistory()
@@ -23,28 +32,31 @@ export default function ProfilePage({ user, setUser }) {
   const getHistory = async () =>{
     const response = await sendRequest('/api/users/get_history')
     const data = await response
-    console.log(data)
-    setHistory(data)
+    setHistory(data.history)
+    setSetting(data.settings)
     
   }
   
   function handleLogOut() {
     userService.logOut();
-    setUser(null);
+    setUserToken(null);
+    setUser(null)
+    console.log(userService.getToken())
   }
 
   return (
     <>
     <div className='d-flex mt-4 ms-4 me-4 '>
       <div className='d-flex flex-column'>
-        <h1>{user.displayName}</h1>
-        <h5>@{user.username}</h5>
+        <h1>{setting.displayName}</h1>
+        <h5>@{setting.username}</h5>
         <h5>{history.followers.length} followers <span className='ms-3'> {history.following.length} following</span></h5>
       <Button className='mt-4 settings-btn mb-4' variant="primary" onClick={handleShow}>
         Settings
       </Button>
       </div>
-      <img className='profile-avatar ms-4 mb-4' src={user.avatar} alt="avatar" />
+      {/* Profile picture click opens the avatar offcanvas */}
+      <img className='profile-avatar ms-4 mb-4' src={setting.avatar} alt="avatar" onClick={handleAvatarCanvasShow} />
     </div>
     <Tabs
       defaultActiveKey="beats"
@@ -57,13 +69,27 @@ export default function ProfilePage({ user, setUser }) {
     </div>
       </Tab>
       <Tab  eventKey="likes" title="Likes">
-      <LikesList user={user}></LikesList>
+      <LikesList user={user} history={history}></LikesList>
       </Tab>
       
     </Tabs>
     
       
+      {/* Avatar Offcanvas */}
+      <Offcanvas placement='bottom' className='off-canvas' show={showAvatarCanvas} onHide={handleAvatarCanvasClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Change Profile Picture</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+        <div className='d-flex flex-column justify-content-center'>
+          <Link to='/avatar' className='avatar-btn'>Change Avatar</Link>
+          <Button className='avatar-btn'>View Avatar</Button>
 
+        </div>
+        </Offcanvas.Body>
+      </Offcanvas>
+
+      {/* Settings Offcanvas */}
       <Offcanvas className='off-canvas' show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Settings</Offcanvas.Title>

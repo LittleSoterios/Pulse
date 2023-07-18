@@ -7,15 +7,29 @@ require('./config/database');
 const User = require('./models/user')
 const Post = require('./models/post')
 const History = require('./models/history')
+const Setting = require('./models/setting')
 
 function createRandomUser(){
+  const displayName = `${faker.person.firstName()} ${faker.person.lastName()}`
+  const username = faker.internet.userName()
+
   return {
-    displayName: `${faker.person.firstName()} ${faker.person.lastName()}`,
-    username: faker.internet.userName(),
-    email: faker.internet.email(),
-    avatar: faker.image.avatar(),
-    password: faker.internet.password(),
-    bio: faker.person.bio()
+    user: {
+      displayName: displayName,
+      username: username,
+      email: faker.internet.email(),
+      password: faker.internet.password()
+    },
+
+    settings :{
+      displayName: displayName,
+      username: username,
+      avatar: faker.image.avatar(),
+      bio: faker.person.bio()
+    }
+
+
+    // bio: faker.person.bio()
   };
 }
 
@@ -55,8 +69,12 @@ async function seed(){
 
   for(let i=0; i<20; i++){
     const user = createRandomUser()
-    const createdUser = await User.create(user)
+    const createdUser = await User.create(user.user)
+    const settings = user.settings
+    settings.user = createdUser._id
+    await Setting.create(settings)
     await History.create({user: createdUser._id})
+    
     arr.push(user)
   }
 

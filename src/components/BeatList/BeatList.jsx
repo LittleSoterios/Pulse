@@ -6,6 +6,8 @@ import sendRequest from '../../utilities/send-request';
 const BeatWithRef = React.forwardRef((props, ref) => <Beat ref={ref} {...props} />);
 
 export default function BeatList({user}) {
+  
+
   const [beats, setBeats] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);  // Add a new state to track if a fetch is ongoing
@@ -32,6 +34,7 @@ export default function BeatList({user}) {
       setLoading(true);  // Set loading to true at the start of the fetch
       const response = await sendRequest(`/post/index?page=${page}`);
       const data = await response
+      
       setBeats(oldBeats => [...oldBeats, ...data.pack]);
       setLoading(false);  // Set loading back to false when the fetch is done
       setHasMore(data.hasMore)

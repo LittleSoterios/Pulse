@@ -3,8 +3,9 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import * as usersService from '../../utilities/users-service';
+import './LoginForm.css'
 
-export default function LoginForm({ setUser, showLogin, setShowLogin }) {
+export default function LoginForm({ setUserToken, showLogin, setShowLogin }) {
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -24,19 +25,20 @@ export default function LoginForm({ setUser, showLogin, setShowLogin }) {
       // will resolve to the user object included in the
       // payload of the JSON Web Token (JWT)
       const user = await usersService.login(credentials);
-      setUser(user);
-    } catch {
+      setUserToken(user);
+    } catch(err) {
+      console.log(err)
       setError('Log In Failed - Try Again');
     }
   }
 
   return (
     <>
-<Card className='signup-form d-flex flex-column align-items-center' style={{width: '90vmin'}}>
+<Card className='login-form d-flex flex-column mt-5 justify-content-center' style={{width: '90vmin'}}>
         <Card.Body className='' >
           <Card.Title>LOG IN</Card.Title>
-        <div className="form-container d-flex flex-column justify-content-center">
-          <Form className='signup-form' autoComplete="off" onSubmit={handleSubmit}>
+        <div className="d-flex flex-column justify-content-center">
+          <Form className='' autoComplete="off" onSubmit={handleSubmit}>
             <Form.Label className='mt-2'>Email</Form.Label>
             <Form.Control type="email" name="email" value={credentials.email} onChange={handleChange} required />
             <Form.Label className='mt-2'>Password</Form.Label>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useDebugValue, useEffect, useState } from 'react';
 
 import NameAvatarBox from '../NameAvatarBox/NameAvatarBox';
 import './Beat.css'
@@ -7,8 +7,13 @@ import sendRequest from '../../utilities/send-request';
 
 const Beat = React.forwardRef(({ beat, user }, ref) => {
   const [likes, setLikes] = useState(beat.post.likes.length)
-  const user_liked = beat.post.likes.includes(user._id)
+  const user_liked = beat.post.likes.includes(user.user)
   const [liked, setLiked] = useState(user_liked)
+  
+
+  useEffect(()=>{
+    setLiked(beat.post.likes.includes(user.user))
+  }, [beat.post.likes, user.user])
 
   const handleLike = async () =>{
     try {

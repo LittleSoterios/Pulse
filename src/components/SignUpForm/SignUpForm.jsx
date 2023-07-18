@@ -8,7 +8,8 @@ import './SignUpForm.css'
 
 export default class SignUpForm extends Component {
   state = {
-    name: '',
+    displayName: '',
+    username: '',
     email: '',
     password: '',
     confirm: '',
@@ -25,13 +26,13 @@ export default class SignUpForm extends Component {
   handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
-      const {name, email, password} = this.state;
-      const formData = {name, email, password};
+      const {displayName, username, email, password} = this.state;
+      const formData = {displayName, username, email, password};
       // The promise returned by the signUp service
       // method will resolve to the user object included
       // in the payload of the JSON Web Token (JWT)
       const user = await signUp(formData);
-      this.props.setUser(user);
+      this.props.setUserToken(user);
     } catch {
       // An error occurred
       // Probably due to a duplicate email
@@ -42,15 +43,15 @@ export default class SignUpForm extends Component {
   render() {
     const disable = this.state.password !== this.state.confirm;
     return (
-      <Card className='signup-form d-flex flex-column align-items-center' style={{width: '90vmin'}}>
+      <Card className='form-container d-flex flex-column align-items-center mt-5' style={{width: '90vmin'}}>
         <Card.Body className='' >
-          <Card.Title>SIGN UP</Card.Title>
+          <Card.Title className='signup-card'>SIGN UP</Card.Title>
         <div className="form-container d-flex flex-column justify-content-center">
           <Form className='signup-form' autoComplete="off" onSubmit={this.handleSubmit}>
             <Form.Label className='mt-2'>Display Name</Form.Label>
-            <Form.Control type="text" name="displayName" value={this.state.name} onChange={this.handleChange} required />
+            <Form.Control type="text" name="displayName" value={this.state.displayName} onChange={this.handleChange} required />
             <Form.Label className='mt-2'>Username</Form.Label>
-            <Form.Control type="text" name="username" value={this.state.name} onChange={this.handleChange} required />
+            <Form.Control type="text" name="username" value={this.state.username} onChange={this.handleChange} required />
             <Form.Label className='mt-2'>Email</Form.Label>
             <Form.Control type="email" name="email" value={this.state.email} onChange={this.handleChange} required />
             <Form.Label className='mt-2'>Password</Form.Label>

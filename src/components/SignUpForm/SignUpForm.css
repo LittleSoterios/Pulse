@@ -9,9 +9,7 @@
 .signup-form{
   background-color: transparent;
   color: white;
-  border: red solid 1px;
-  align-self: center;
-
+  margin-left: 1.5rem;
 }
 
 .login{
@@ -25,4 +23,9 @@
   background: linear-gradient(45deg, rgba(254,0,0,1) 0%, rgba(161,0,218,1) 100%);
   color: white;
   border: none;
+}
+
+.signup-card{
+  color: white;
+  margin-left: 2rem;
 }

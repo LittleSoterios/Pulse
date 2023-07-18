@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import './App.css';
@@ -9,13 +9,33 @@ import SearchPage from '../SearchPage/SearchPage';
 import CreatePage from '../CreatePage/CreatePage';
 import LikesPage from '../ActivityPage/ActivityPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
+import ChangeAvatarPage from '../ChangeAvatarPage/ChangeAvatarPage';
+import sendRequest from '../../utilities/send-request';
 
 export default function App(props) {
-  const [user, setUser] = useState(getUser());
+  const [userToken, setUserToken] = useState(getUser());
+  const [user, setUser] = useState({displayName: '', username: '', bio: '', avatar: ''})
+
+
+  useEffect(() =>{
+    getHistory()
+  },[])
+  
+  const getHistory = async () =>{
+    const response = await sendRequest('/api/users/get_history')
+    const data = await response
+    
+    
+    setUser(data.settings)
+    
+    
+  }
+
+
 
   return (
     <main className="App">
-      { user ?
+      { userToken ?
           <>
             <NavBar user={user} setUser={setUser} />
             <Routes>
@@ -24,11 +44,13 @@ export default function App(props) {
               <Route path="/search" element={<SearchPage user={user}/>} />
               <Route path="/create" element={<CreatePage user={user} />} />
               <Route path="/likes" element={<LikesPage/>} />
-              <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} />} />
+              <Route path="/profile" element={<ProfilePage user={user} setUser={setUser} userToken={userToken} setUserToken={setUserToken} />} />
+              <Route path="/avatar" element={<ChangeAvatarPage user={user} setUser={setUser} />} />
             </Routes>
           </>
           :
-          <AuthPage setUser={setUser} />
+          
+          <AuthPage setUserToken={setUserToken} />
       }
     
     </main>

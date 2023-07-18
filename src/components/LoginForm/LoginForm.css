@@ -4,3 +4,22 @@
   align-items: center;
   justify-content: center;
 }
+
+.login-form{
+  background-color: transparent;
+  color: white;
+  margin-left: 1.5rem;
+}
+
+.login{
+  background-color: rgb(244,0,39);
+  background: linear-gradient(45deg, rgb(0,212,224) 0%, rgb(0,228,0) 100%);
+  border: none;
+  color: white;
+}
+
+.signup{
+  background: linear-gradient(45deg, rgba(254,0,0,1) 0%, rgba(161,0,218,1) 100%);
+  color: white;
+  border: none;
+}

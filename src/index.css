@@ -161,3 +161,61 @@ h2{
   
 
 }
+
+.avatar-btn{
+  display: flex;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem;
+  border-radius: 9px;
+  margin-bottom: 1.5rem;
+  background-color: rgba(128, 128, 128, 0.479);
+  border: none
+}
+
+
+.avatar-page{
+  position:relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.avatar-close{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
+  font-size: 30px;
+  margin-right: 0.5rem;
+  text-decoration: none;
+  color: white;
+
+}
+.avatar-close > img{
+  filter: invert(1);
+  width: 2rem;
+  margin-top: 1rem;
+}
+
+.avatar-img-change{
+  border-radius: 50%;
+  margin-top: 2rem;
+  padding: 1rem
+  
+}
+
+.change-avatar-link{
+  position: relative;
+  width: 100%;
+}
+
+
+.pencil{
+  position: absolute;
+  bottom: 0;
+  right: 1rem;
+  z-index: 999;
+  filter: invert(1);
+}
+

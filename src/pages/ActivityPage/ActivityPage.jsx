@@ -1,5 +1,7 @@
+import NotificationList from "../../components/NotificationList.jsx/NotificationList";
+
 export default function LikesPage() {
   return (
-    <h2>Activity</h2>
+    <NotificationList/>
   );
 }

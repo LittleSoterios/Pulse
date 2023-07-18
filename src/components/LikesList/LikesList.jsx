@@ -12,7 +12,7 @@ export default function LikesList({ user }) {
       
       const response = await sendRequest(`/post/index_likes`)
       const data = await response
-      console.log('this is likes',  data)       
+            
       setBeats( data);
       // console.log('stuff')
   };

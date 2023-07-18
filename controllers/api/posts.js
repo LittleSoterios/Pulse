@@ -4,6 +4,7 @@ const cloudinary = require('../../config/cloudinary');
 const User = require('../../models/user'); // assuming you have a User model
 const Post = require('../../models/post');
 const History = require('../../models/history');
+const Setting = require('../../models/setting');
 const { LegendToggleRounded } = require('@mui/icons-material');
 
 
@@ -56,6 +57,7 @@ async function index(req, res) {
     const skip = (page - 1) * limit;  // Calculate how many documents to skip
     let hasMore = true
     const history = await History.findOne({ user: req.user._id })
+    
 
     const beats = await Post.find({
       user: { $in: history.following }
@@ -63,9 +65,13 @@ async function index(req, res) {
     .skip(skip)
     .limit(limit)
     .sort({ createdAt: -1 })
+
+    
+    
     if(beats.length === 0) hasMore = false
     const pack = await Promise.all(beats.map(async (beat) => {
-      const user = await User.findById(beat.user);
+      const user = await Setting.findOne({user: beat.user});
+      
       return {post: beat, user: user};
     }));
     res.json({pack, hasMore})
@@ -79,10 +85,11 @@ async function index(req, res) {
 async function index_own(req, res) {
 
   try {
+    const user = await Setting.findOne({user: req.user._id});
     const beats = await Post.find({ user: req.user._id }).sort({ createdAt: -1 })
 
     const pack = await Promise.all(beats.map(async (beat) => {
-      return { post: beat, user: req.user };
+      return { post: beat, user: user };
     }));
     res.json(pack)
 
@@ -95,9 +102,9 @@ async function index_own(req, res) {
 
 async function index_likes(req, res){
   try {
-    console.log(req.user)
+    
     const history = await History.findOne({user: req.user._id})
-    console.log(history.liked)
+    
     const beatsUnsorted = await Post.find({
       _id: { $in: history.liked}
     })
@@ -110,7 +117,7 @@ async function index_likes(req, res){
     beats = beats.reverse()
     
     const pack = await Promise.all(beats.map(async (beat) => {
-      const user = await User.findById(beat.user);
+      const user = await Setting.findOne({user: beat.user});
       return {post: beat, user: user};
     }));
     res.json(pack)
@@ -126,8 +133,13 @@ async function like(req, res) {
   try {
     const history = await History.findOne({ user: req.user._id })
     const post = await Post.findById(req.params.id)
-    const user = await User.findById(req.user._id)
-
+    const user = await User.findById(req.user._id) // this is the user that liked the post
+    
+    const likedUser = await History.findOne({user : post.user}) // this is the user who's post it was that was liked
+    console.log('liked user: ', likedUser)
+    const notification = {type: 'like', from: user._id, post: post._id, read: false}
+    likedUser.notifications.push(notification) // this handles the notification for the like recieving user
+    likedUser.save()
     history.liked.push(post._id) // add posted to users history
     history.save()
 

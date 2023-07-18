@@ -5,7 +5,7 @@ import sendRequest from '../../utilities/send-request';
 
 export default function ProfileBeats({ user }) {
     const [beats, setBeats] = useState([]);
-
+    
     useEffect(() => {
         fetchBeats();
     }, []);
@@ -15,7 +15,7 @@ export default function ProfileBeats({ user }) {
         
         const response = await sendRequest(`/post/index_own`)
         const data = await response
-        console.log(data)       
+               
         setBeats(data);
         // console.log('stuff')
     };
