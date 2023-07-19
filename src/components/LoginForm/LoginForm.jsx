@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import * as usersService from '../../utilities/users-service';
 import './LoginForm.css'
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginForm({ setUserToken, showLogin, setShowLogin }) {
   const [credentials, setCredentials] = useState({
@@ -11,6 +12,7 @@ export default function LoginForm({ setUserToken, showLogin, setShowLogin }) {
     password: ''
   });
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   function handleChange(evt) {
     setCredentials({ ...credentials, [evt.target.name]: evt.target.value });
@@ -26,6 +28,7 @@ export default function LoginForm({ setUserToken, showLogin, setShowLogin }) {
       // payload of the JSON Web Token (JWT)
       const user = await usersService.login(credentials);
       setUserToken(user);
+      navigate('/home')
     } catch(err) {
       console.log(err)
       setError('Log In Failed - Try Again');
@@ -44,7 +47,7 @@ export default function LoginForm({ setUserToken, showLogin, setShowLogin }) {
             <Form.Label className='mt-2'>Password</Form.Label>
             <Form.Control type="password" name="password" value={credentials.password} onChange={handleChange} required />
             <div className='d-flex justify-content-between mt-3'>
-              <Button className='mt-2 login' onClick={() => setShowLogin(!showLogin)}>SIGN UP</Button>
+              <Button className='mt-2 login' onClick={() => setShowLogin(!showLogin)}>Don't have an account? Signup!</Button>
               <Button className='mt-2 signup' type="submit" >LOG IN</Button>
             </div>
           </Form>

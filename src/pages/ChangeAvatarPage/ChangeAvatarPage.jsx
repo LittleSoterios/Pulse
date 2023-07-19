@@ -7,6 +7,7 @@ import { cropImage } from "../../utilities/crop-image";
 import axios from 'axios'
 import { getToken } from '../../utilities/users-service';
 import sendRequest from '../../utilities/send-request';
+import { Loading } from '../../components/Loading/Loading';
 
 export default function ChangeAvatarPage({ user, setUser }) {
   const [image, setImage] = useState(null);
@@ -14,6 +15,7 @@ export default function ChangeAvatarPage({ user, setUser }) {
   const [setting, setSetting] = useState({displayName: user.displayName, username: user.username, bio: '', avatar: ''})
   const [preview, setPreview] = useState(setting.avatar);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() =>{
     getHistory()
@@ -25,6 +27,7 @@ export default function ChangeAvatarPage({ user, setUser }) {
     
     setSetting(data.settings)
     setPreview(data.settings.avatar)
+    setIsLoading(false);
     
   }
 
@@ -59,11 +62,18 @@ export default function ChangeAvatarPage({ user, setUser }) {
       const data = response.data
       console.log(data)
       setUser(data)
+      
       navigate('/profile');
     } catch (err) {
       console.error(err);
     }
 
+  }
+
+  if(isLoading){
+    return(
+      <Loading></Loading>
+    )
   }
 
   return (
@@ -77,7 +87,10 @@ export default function ChangeAvatarPage({ user, setUser }) {
         <img className="pencil" src={Pencil} alt="paperclip" />
       </Form.Label>
       <Form.Control id="image-input" type="file" onChange={onFileChange} />
-      <Button onClick={onSaveChanges}>Save Changes</Button>
+      <div className='d-flex justify-content-center mt-5'>
+      <Button className='save-changes' onClick={onSaveChanges}>Save Changes</Button>
+
+      </div>
     </div>
   );
 }

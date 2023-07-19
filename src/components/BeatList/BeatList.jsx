@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Beat from '../Beat/Beat';
 import './BeatList.css'
 import sendRequest from '../../utilities/send-request';
+import { Loading } from '../Loading/Loading';
 
 const BeatWithRef = React.forwardRef((props, ref) => <Beat ref={ref} {...props} />);
 
@@ -12,6 +13,7 @@ export default function BeatList({user}) {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);  // Add a new state to track if a fetch is ongoing
   const [hasMore, setHasMore] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const observer = useRef();
   const lastBeatRef = useCallback(node => {
@@ -36,7 +38,8 @@ export default function BeatList({user}) {
       const data = await response
       
       setBeats(oldBeats => [...oldBeats, ...data.pack]);
-      setLoading(false);  // Set loading back to false when the fetch is done
+      setLoading(false); 
+      setIsLoading(false); // Set loading back to false when the fetch is done
       setHasMore(data.hasMore)
   }
 
@@ -50,6 +53,12 @@ export default function BeatList({user}) {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  if(isLoading){
+    return(
+      <Loading></Loading>
+    )
   }
 
   return (

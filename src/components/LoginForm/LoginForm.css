@@ -12,8 +12,9 @@
 }
 
 .login{
-  background-color: rgb(244,0,39);
-  background: linear-gradient(45deg, rgb(0,212,224) 0%, rgb(0,228,0) 100%);
+  font-size: small;
+  text-decoration: underline;
+  background: transparent;
   border: none;
   color: white;
 }

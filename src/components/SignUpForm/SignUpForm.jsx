@@ -5,6 +5,9 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import './SignUpForm.css'
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default class SignUpForm extends Component {
   state = {
@@ -13,8 +16,11 @@ export default class SignUpForm extends Component {
     email: '',
     password: '',
     confirm: '',
-    error: ''
+    error: '',
+    navigate: useNavigate
   };
+
+  
 
   handleChange = (evt) => {
     this.setState({
@@ -22,6 +28,8 @@ export default class SignUpForm extends Component {
       error: ''
     });
   };
+
+  
 
   handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -33,6 +41,8 @@ export default class SignUpForm extends Component {
       // in the payload of the JSON Web Token (JWT)
       const user = await signUp(formData);
       this.props.setUserToken(user);
+      const navigate = this.state.navigate()
+      navigate('/home')
     } catch {
       // An error occurred
       // Probably due to a duplicate email
@@ -59,7 +69,7 @@ export default class SignUpForm extends Component {
             <Form.Label className='mt-2'>Confirm</Form.Label>
             <Form.Control  type="password" name="confirm" value={this.state.confirm} onChange={this.handleChange} required />
             <div className='d-flex justify-content-between mt-3'>
-              <Button className='mt-2 login' onClick={() => this.props.setShowLogin(!this.props.showLogin)}>LOG IN</Button>
+              <Button className='mt-2 login' onClick={() => this.props.setShowLogin(!this.props.showLogin)}>Already have an account? Login!</Button>
               <Button className='mt-2 signup' type="submit" disabled={disable}>SIGN UP</Button>
             </div>
           </Form>

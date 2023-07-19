@@ -8,14 +8,16 @@ import sendRequest from '../../utilities/send-request';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import LikesList from '../../components/LikesList/LikesList';
+import { Loading } from '../../components/Loading/Loading';
 
 export default function ProfilePage({ user, setUserToken, setUser }) {
-
-
+  
   const [show, setShow] = useState(false);
   const [showAvatarCanvas, setShowAvatarCanvas] = useState(false); // state to control avatar offcanvas
   const [history, setHistory]  = useState({followers: [], following: []});
-  const [setting, setSetting] = useState({displayName: user.displayName, username: user.username, bio: '', avatar: ''})
+  const [setting, setSetting] = useState({displayName: '', username: '', bio: '', avatar: ''})
+  const [isLoading, setIsLoading] = useState(true);
+
   
   
   const handleClose = () => setShow(false);
@@ -26,22 +28,30 @@ export default function ProfilePage({ user, setUserToken, setUser }) {
   const handleAvatarCanvasShow = () => setShowAvatarCanvas(true);
 
   useEffect(() =>{
+    const getHistory = async () =>{
+      const response = await sendRequest('/api/users/get_history')
+      const data = await response
+      setHistory(data.history)
+      setSetting(data.settings)
+      setUser(data.settings)
+      setIsLoading(false);
+    }
+      
     getHistory()
-  },[])
+  },[setUser])
   
-  const getHistory = async () =>{
-    const response = await sendRequest('/api/users/get_history')
-    const data = await response
-    setHistory(data.history)
-    setSetting(data.settings)
-    
-  }
   
   function handleLogOut() {
     userService.logOut();
     setUserToken(null);
     setUser(null)
     console.log(userService.getToken())
+  }
+
+  if(isLoading){
+    return(
+      <Loading></Loading>
+    )
   }
 
   return (

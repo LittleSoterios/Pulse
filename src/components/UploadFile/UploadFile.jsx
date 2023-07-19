@@ -59,7 +59,7 @@ function UploadFile({ user }) {
           <img className='paperclip ms-5' src={Paperclip} alt="paperclip" />
         </Form.Label>
         <Form.Control id='image-input' type="file" onChange={onFileChange} />
-        <Button className='me-4' onClick={onUpload}>Post</Button>
+        <Button className='me-4 post-btn' onClick={onUpload}>Post</Button>
       </div>
     </div>
     </>

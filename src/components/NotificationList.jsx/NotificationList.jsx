@@ -25,7 +25,7 @@ export default function NotificationList(){
     <h2>Notifications</h2>
     <div>
       {notifications.map((notification, index) =>{
-        return <Notification key={index} post={notification.post} from={notification.from} type={notification.type}></Notification>
+        return <Notification key={index} post={notification.post} from={notification.from} type={notification.type} notification={notification.notification}></Notification>
       })}
     </div>
     </>

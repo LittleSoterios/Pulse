@@ -116,10 +116,12 @@ async function follow(req, res){
     const history_2 = await History.findOne({user: settings.user})
     history_2.followers.push(req.user._id)
     
-    const notification = {type: 'follow', from: req.user._id}
-    history_2.notifications.push(notification)
+    if(settings.user._id.toString() !== req.user._id.toString()){ // don't add notification for following self.
+      const notification = {type: 'follow', from: req.user._id}
+      history_2.notifications.push(notification)
+    }
     history_2.save()
-
+    
     res.json(history)
   } catch (err) {
     console.error(err);
@@ -176,7 +178,7 @@ async function changeAvatar(req, res){
       .resize(size, size, {
         fit: 'cover',
       })
-      .toFile(`uploads/${req.user._id}_avatar`); // change this to where you want to save the cropped image
+      .toFile(`uploads/${req.user._id}_avatar`); // 
 
     // delete the original file
     fs.unlinkSync(file);
@@ -233,7 +235,7 @@ async function getNotifications(req, res){
       const post = await Post.findById(notification.post)
       const type = notification.type
       console.log(`${user.displayName} ${type}'d you`)
-      return {from: user, post, type}
+      return {from: user, post, type, notification}
     }))
 
     res.json(pack)

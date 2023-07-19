@@ -17,10 +17,12 @@
 }
 
 .preview{
-  height: 60vh;
-  height: 60dvw;
-  width: auto;
+  height: 40vh;
+  height: 40dvw;
+  
   align-self: center;
+  object-fit: cover;
+  
   
 }
 .delete-icon {
@@ -62,3 +64,10 @@
   outline: none; 
 }
 
+.post-btn{
+  border-radius: 9px;
+  background-color: rgba(114, 114, 114, 0.521);
+  border: none;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}

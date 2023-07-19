@@ -2,6 +2,8 @@ import './Notification.css'
 
 export default function Notification({ from, post, type }) {
 
+  
+
 
   return (
     <>
