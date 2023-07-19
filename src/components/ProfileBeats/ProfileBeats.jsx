@@ -20,9 +20,23 @@ export default function ProfileBeats({ user }) {
         // console.log('stuff')
     };
 
+    const handleDelete = async (beatId) =>{
+      try {
+        await sendRequest(`/post/delete/${beatId}`, 'DELETE')
+        const updatedBeats = beats.filter(beat => beat.post._id !== beatId);
+        console.log(updatedBeats)
+        setBeats(updatedBeats);
+        
+  
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  
+
     return (
         <div className="beat-list">
-            {beats.map(beat => <Beat key={beat.post._id} beat={beat} user={user}/>)}
+            {beats.map(beat => <Beat key={beat.post._id} beat={beat} user={user} handleDelete={handleDelete}/>)}
         </div>
     );
 }

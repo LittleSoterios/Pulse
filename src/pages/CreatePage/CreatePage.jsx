@@ -5,7 +5,7 @@ import NameAvatarBox from "../../components/NameAvatarBox/NameAvatarBox";
 
 export default function CreatePage({ user }) {
 
-  
+  console.log(user)
   return (
     <>
     <h2>Create</h2>

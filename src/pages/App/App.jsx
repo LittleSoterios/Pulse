@@ -18,18 +18,18 @@ export default function App(props) {
 
 
   useEffect(() =>{
+    
+    const getHistory = async () =>{
+      const response = await sendRequest('/api/users/get_history')
+      const data = await response
+      setUser(data.settings)
+      
+      
+    }
+    
     getHistory()
   },[])
   
-  const getHistory = async () =>{
-    const response = await sendRequest('/api/users/get_history')
-    const data = await response
-    
-    
-    setUser(data.settings)
-    
-    
-  }
 
 
 

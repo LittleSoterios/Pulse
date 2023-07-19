@@ -3,6 +3,7 @@ import Pulse from '../../public/Pulse-Logo.svg'
 
 
 export default function HomePage({ user }) {
+  console.log(user)
   return (
     <>
     <div className="d-flex justify-content-center">

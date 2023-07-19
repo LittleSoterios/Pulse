@@ -40,13 +40,25 @@ export default function BeatList({user}) {
       setHasMore(data.hasMore)
   }
 
+  const handleDelete = async (beatId) =>{
+    try {
+      await sendRequest(`/post/delete/${beatId}`, 'DELETE')
+      const updatedBeats = beats.filter(beat => beat.post._id !== beatId);
+      setBeats(updatedBeats);
+      
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
       <div className="beat-list">
           {beats.map((beat, index) => {
               if (beats.length === index + 1) {
-                  return  <BeatWithRef ref={lastBeatRef} key={beat.post._id} beat={beat} user={user} />
+                  return  <BeatWithRef ref={lastBeatRef} key={beat.post._id} beat={beat} user={user} handleDelete={handleDelete}/>
               } else {
-                  return <Beat key={beat.post._id} beat={beat} user={user} />
+                  return <Beat key={beat.post._id} beat={beat} user={user} handleDelete={handleDelete}/>
               }
           })}
       </div>

@@ -13,5 +13,6 @@ router.get('/index_own', ensureLoggedIn, PostCtrl.index_own)
 router.post('/like/:id', ensureLoggedIn, PostCtrl.like)
 router.post('/dislike/:id', ensureLoggedIn, PostCtrl.dislike)
 router.get('/index_likes', ensureLoggedIn, PostCtrl.index_likes)
+router.delete('/delete/:id', ensureLoggedIn, PostCtrl.delete)
 
 module.exports = router;

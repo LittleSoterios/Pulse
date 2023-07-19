@@ -5,7 +5,7 @@ const User = require('../../models/user'); // assuming you have a User model
 const Post = require('../../models/post');
 const History = require('../../models/history');
 const Setting = require('../../models/setting');
-const { LegendToggleRounded } = require('@mui/icons-material');
+const { LegendToggleRounded, ResetTv } = require('@mui/icons-material');
 
 
 module.exports = {
@@ -14,7 +14,8 @@ module.exports = {
   index_own,
   like,
   dislike,
-  index_likes
+  index_likes,
+  delete: delete_post
 }
 
 async function create(req, res) {
@@ -114,7 +115,10 @@ async function index_likes(req, res){
       return beatsUnsorted.find(beat => beat._id.toString() === id.toString());
     });
 
+    
+
     beats = beats.reverse()
+
     
     const pack = await Promise.all(beats.map(async (beat) => {
       const user = await Setting.findOne({user: beat.user});
@@ -174,4 +178,51 @@ async function dislike(req, res) {
     console.error(err);
     res.status(500).send('Server Error');
   }
+}
+
+
+async function delete_post(req, res){
+  console.log(req.params.id)
+  
+  try {
+    const post = await Post.findById(req.params.id)
+    if (post.user.toString() !== req.user._id.toString()) throw new Error('not owner of post')
+
+    // Find all users that liked the post
+    const users = await History.find({ liked: post._id });
+
+    // For each user, remove the reference to the post in their liked posts
+    for(let user of users) {
+        const index = user.liked.map(id => id.toString()).indexOf(post._id.toString());
+        if(index > -1) {
+            user.liked.splice(index, 1);
+        }
+    }
+
+    // Find all users with notifications related to the post
+    const usersWithNotifications = await History.find({ 'notifications.post': post._id });
+
+    // For each user, remove the notification related to the post
+    for(let user of usersWithNotifications) {
+        user.notifications = user.notifications.filter(notification => notification.post.toString() !== post._id.toString());
+    }
+
+    // Use a Set to get unique users
+    let uniqueUsers = [...new Set([...users, ...usersWithNotifications])];
+
+    // Save changes for all unique users
+    for(let user of uniqueUsers) {
+        await user.save();
+    }
+    
+
+    // Delete the post
+    await Post.deleteOne({_id: post._id});
+
+    res.json({message: 'post deleted successfully'})
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  } 
 }

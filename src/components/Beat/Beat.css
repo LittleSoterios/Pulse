@@ -28,3 +28,11 @@
   padding-bottom: 1rem;
   border-bottom: 1px rgba(100,100,100,0.5) solid;
 }
+.dots{
+  margin-top: 1.4rem;
+  margin-right: 1rem;
+  filter: invert(0.7);
+  height: 36px;
+  width: 36px;
+
+}
