@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import sendRequest from "../../utilities/send-request"
 import Notification from "../Notification/Notification"
+import { Loading } from "../Loading/Loading"
 
 export default function NotificationList(){
 
   const [notifications, setNotifications] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() =>{
     fetchNotifications()
@@ -14,10 +16,15 @@ export default function NotificationList(){
     const response = await sendRequest('api/users/get_notifications')
     const data = await response
     setNotifications(data)
+    setIsLoading(false);
 
   }
 
-
+  if(isLoading){
+    return(
+      <Loading></Loading>
+    )
+  }
 
 
   return (
