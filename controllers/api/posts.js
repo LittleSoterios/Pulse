@@ -86,7 +86,7 @@ async function index_own(req, res) {
   try {
     const user = await Setting.findOne({user: req.user._id});
     const beats = await Post.find({ user: req.user._id }).sort({ createdAt: -1 })
-
+    
     const pack = await Promise.all(beats.map(async (beat) => {
       return { post: beat, user: user };
     }));
