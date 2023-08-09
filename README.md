@@ -3,7 +3,7 @@
 ## Overview
 Pulse is a social media platform inspired by Twitter and Threads. However, instead of tweets, we have beats. Beats are the heartbeats of our users, encapsulating thoughts, emotions, and snippets of their lives.
 
-##Usage
+## Usage
 To use Pulse:
 
 Register for an account at https://pulse-social-6a1e7f6e9542.herokuapp.com/ 
