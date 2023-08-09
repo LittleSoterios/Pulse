@@ -176,7 +176,8 @@ async function index(req, res) {
 ### Tracking and Displaying User Likes:
 Reverse Chronological Order: One of the significant wins for Pulse was the ability to not only track the beats that users liked but also to display them on their profile page in reverse chronological order. This feature added depth to the user experience, allowing users to view their historical preferences at a glance and relive moments or beats that resonated with them. Achieving this involved backend logic and frontend rendering to ensure efficiency and a seamless user experience. The backend is included below: 
 
-`async function index_own(req, res) {
+```
+async function index_own(req, res) {
 
   try {
     const user = await Setting.findOne({user: req.user._id});
@@ -192,14 +193,14 @@ Reverse Chronological Order: One of the significant wins for Pulse was the abili
     res.status(500).send('Server Error');
   }
 }
-`
+```
 
 ### Implementing Notifications for Liked Beats:
 Instant Engagement: Enhancing user interactivity and engagement was always a priority while building Pulse. Therefore, another substantial win was the implementation of instant notifications for beat owners when another user liked their beat.
 
 The backend controller for liking posts is below:
 
-`
+```
 async function like(req, res) {
 
   try {
@@ -226,7 +227,7 @@ async function like(req, res) {
     res.status(500).send('Server Error');
   }
 }
-`
+```
 
 
 Key Learnings
