@@ -230,7 +230,15 @@ async function like(req, res) {
 ```
 
 
-Key Learnings
-State Management: Learned the importance of efficient state management in React and how it impacts rendering.
-Database Relations: Gained insights into modeling relations in a NoSQL database and the trade-offs involved.
-User Experience: Realized the value of user feedback in shaping the platform and making it more user-friendly.
+## Key Learnings
+React's Power:
+
+State Management: Mastered the art of using React states to ensure data consistency and cater to dynamic user interactions.
+
+Hooks: useEffect became a foundational tool for data-fetching and side effects, while useRef was instrumental in direct DOM interactions, particularly for advanced patterns like lazy loading.
+
+Cloudinary Integration:
+
+Navigating Documentation: Overcame challenges in Cloudinary's documentation to successfully implement cloud-based image hosting.
+
+Image Size Handling: Ensured consistent user experience by adeptly managing avatar and profile picture dimensions.
