@@ -26,8 +26,11 @@ The aim was to create a fullstack application using the MERN stack. Implementing
 
 ## Planning
 Research: Started by studying Twitter's main features and functionalities.
-Wireframing: Outlined main pages: Homepage, Profile, and Create Beat - these can be found here: https://www.figma.com/file/C6vwgG0T0gGdnTqe9pWXa1/Freader?type=design&node-id=0-1&mode=design&t=ju9GkMlRC3MQfDq4-0
-Database Schema Design: Designed models for User, Beats, and interactions like likes and comments: https://app.quickdatabasediagrams.com/#/d/AltSwL
+Wireframing: Outlined main pages: Homepage, Profile, and Create Beat - these can be found here: https://www.figma.com/file/C6vwgG0T0gGdnTqe9pWXa1/Freader?type=design&node-id=0-1&mode=design&t=ju9GkMlRC3MQfDq4-0 \
+![Imgur](https://i.imgur.com/KYTebsW.png)
+\
+Database Schema Design: Designed models for User, Beats, and interactions like likes and comments: https://app.quickdatabasediagrams.com/#/d/AltSwL \
+![Imgur](https://i.imgur.com/9Aoav8i.png)
 
 ## Build Process
 I started by establishing a server with Node.js, setting up API routes with Express.js, and integrated MongoDB with Mongoose.
@@ -64,7 +67,7 @@ Efficient Fetching: Coupled with a backend pagination mechanism, this lazy loadi
 
 The frontend: 
 
-```
+```javascript
 const BeatWithRef = React.forwardRef((props, ref) => <Beat ref={ref} {...props} />);
 
 export default function BeatList({user}) {
@@ -137,7 +140,7 @@ export default function BeatList({user}) {
 ```
 
 The backend:
-```
+```javascript
 async function index(req, res) {
 
   try {
@@ -176,7 +179,7 @@ async function index(req, res) {
 ### Tracking and Displaying User Likes:
 Reverse Chronological Order: One of the significant wins for Pulse was the ability to not only track the beats that users liked but also to display them on their profile page in reverse chronological order. This feature added depth to the user experience, allowing users to view their historical preferences at a glance and relive moments or beats that resonated with them. Achieving this involved backend logic and frontend rendering to ensure efficiency and a seamless user experience. The backend is included below: 
 
-```
+```javascript
 async function index_own(req, res) {
 
   try {
@@ -200,7 +203,7 @@ Instant Engagement: Enhancing user interactivity and engagement was always a pri
 
 The backend controller for liking posts is below:
 
-```
+```javascript
 async function like(req, res) {
 
   try {
@@ -231,13 +234,13 @@ async function like(req, res) {
 
 
 ## Key Learnings
-React's Power:
+### React's Power:
 
 State Management: Mastered the art of using React states to ensure data consistency and cater to dynamic user interactions.
 
 Hooks: useEffect became a foundational tool for data-fetching and side effects, while useRef was instrumental in direct DOM interactions, particularly for advanced patterns like lazy loading.
 
-Cloudinary Integration:
+### Cloudinary Integration:
 
 Navigating Documentation: Overcame challenges in Cloudinary's documentation to successfully implement cloud-based image hosting.
 
