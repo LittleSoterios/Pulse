@@ -29,7 +29,7 @@ Research: Started by studying Twitter's main features and functionalities.
 Wireframing: Outlined main pages: Homepage, Profile, and Create Beat - these can be found here: https://www.figma.com/file/C6vwgG0T0gGdnTqe9pWXa1/Freader?type=design&node-id=0-1&mode=design&t=ju9GkMlRC3MQfDq4-0 \
 ![Imgur](https://i.imgur.com/KYTebsW.png)
 \
-Database Schema Design: Designed models for User, Beats, and interactions like likes and comments: https://app.quickdatabasediagrams.com/#/d/AltSwL \
+Database Schema Design: Designed models for User, Beats, and interactions like likes and comments.  \
 ![Imgur](https://i.imgur.com/9Aoav8i.png)
 
 ## Build Process
